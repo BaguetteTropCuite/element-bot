@@ -1,0 +1,12 @@
+services:
+
+  bot:
+    image: ghcr.io/baguettetropcuite/element-bot/bot:latest
+    restart: always
+    # See port in Dockerfile
+    ports: 
+      - '6969:6969'
+
+networks:
+  my_network:
+    external: true

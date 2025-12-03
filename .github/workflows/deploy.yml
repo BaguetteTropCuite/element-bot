@@ -4,6 +4,7 @@ name: Deploy V1.0
 # 1 : Generate token (write:packages, delete:packages)
 # 2 : Add secret ['secrets.SERVER_HOST','secrets.SERVER_USER','secrets.SERVER_SSH_KEY','secrets.SERVER_PORT',"ghrcToken","ghrcUser"]
 
+
 on:
   push:
     branches:
@@ -27,7 +28,7 @@ jobs:
       - name: Set up Git for checking changes
         run: git fetch --prune --unshallow
 
-      # Check change on BOT
+      # Check changes on BOT
       - name: Checking update on BOT
         id: check
         run: |

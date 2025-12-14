@@ -1,11 +1,17 @@
 services:
-
   bot:
     image: ghcr.io/baguettetropcuite/element-bot/bot:latest
+    container_name: matrix-webhook-bot
     restart: always
-    # See port in Dockerfile
+    
+    env_file: #Lecture automatique des variables d'env
+      - .env
+      
     ports: 
       - '6969:6969'
+
+    networks:
+      - my_network
 
 networks:
   my_network:

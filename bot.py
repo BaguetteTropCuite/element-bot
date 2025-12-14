@@ -23,7 +23,7 @@ async def send_matrix_message(room_id, message):
     client = AsyncClient(HOMESERVER, MATRIX_USER) # AsyncClient = Classe de la lib matrix-nio pour instancier le bot
     
 
-    # Tentative de connexion au serveur depuis l'utilisateur bot.
+    # Tentative de connexion au serveur depuis l'utilisateur bot
     try:
         await client.login(MATRIX_PASSWORD)
     except Exception as e:
@@ -134,10 +134,5 @@ def handle_webhook():
     
 
 
-
-
-
-
-    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=6969)

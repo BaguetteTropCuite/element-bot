@@ -1,6 +1,7 @@
 import json
 import os
 import asyncio
+import traceback
 from flask import Flask, request, jsonify
 from nio import AsyncClient
 
@@ -51,7 +52,7 @@ async def send_matrix_message(room_id, message):
     return response.event_id is not None
 
 
-# Route de test
+# Route de test (Vérifie toute la logique de communication sans les erreurs de parsing fonctionne)
 @app.route('/debug', methods=['POST'])
 def handle_debug():
     try:
@@ -69,30 +70,42 @@ def handle_debug():
         return jsonify({"status": "error", "message": f"Erreur critique lors du debug (Lié à la fonction) {str(e)}"}), 500
     
     
+
 # Route de capture
 @app.route('/capture-json', methods=['POST', 'GET'])
 def capture_json():
     try:
         if request.is_json:
             data = request.json
+            content_type = "JSON (application/json)"
         else:
-            # Si jamais c'est pas du json
             data = request.data.decode('utf-8') 
+            content_type = "TEXTE BRUT (Content-Type manquant)"
             
-        # Afficher le contenu complet dans vos logs
-        print("\n" + "="*50) # évite d'avoir des logs collés
-        print("/! WEBHOOK CAPTURÉ ========================================== /!|")
+        # Afficher le contenu complet dans les logs
+        print("\n" + "="*50) 
+        print(f"/! WEBHOOK CAPTURÉ ========================================== /!| ({content_type})")
         print(f"URL => : {request.url}")
         print(f"Méthode =>: {request.method}")
-        print(f"Contenu => :\n{json.dumps(data, indent=4)}")
-        print("="*50 + "\n") # évite d'avoir des logs collés
+        
+        if isinstance(data, dict) or isinstance(data, list):
+            content_to_print = json.dumps(data, indent=4)
+        else:
+            # Si chaine de data brute
+            content_to_print = str(data)
+            
+        print(f"Contenu => :\n{content_to_print}")
+        print("="*50 + "\n")
 
-        # Retourne une réponse HTTP
         return jsonify({"status": "captured", "message": "Pokemon capturé"}), 200
 
     except Exception as e:
-        # Si erreur ou log ilisible
-        print(f"Erreur lors de la capture du Webhook : {e}")
+        # Si erreur
+        print("\n" + "#"*50)
+        print(f" [ERREUR CRITIQUE] Échec de la capture du Webhook : {e}")
+        traceback.print_exc()
+        print("#"*50 + "\n")
+        
         return jsonify({"status": "error", "message": f"Échec de la capture: {str(e)}"}), 500
 
 

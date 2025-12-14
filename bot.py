@@ -10,7 +10,7 @@ MATRIX_PASSWORD = os.environ.get("MATRIX_PASSWORD")
 HOMESERVER = os.environ.get("HOMESERVER", "https://matrix.org")
 ROOM_ID = os.environ.get("ROOM_ID")
 
-# Vérification des variables password et Romm_ID
+# Vérification des variables password et Romm_ID.
 if not MATRIX_PASSWORD or not ROOM_ID:
     print("Erreur: Les variables MATRIX_PASSWORD et/ou ROOM_ID ne sont pas configurées.")
     exit(1)

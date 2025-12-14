@@ -72,7 +72,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT}}
           script: |
-            cd /opt/bot-element/
+            cd /opt/element-bot/
             pwd
             echo "${{ secrets.ghrcToken }}" | docker login ghcr.io -u ${{ secrets.ghrcUser }} --password-stdin
             git pull origin main

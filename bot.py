@@ -4,7 +4,7 @@ import asyncio
 from flask import Flask, request, jsonify
 from nio import AsyncClient
 
-# Configuration de l'utilisateur Matrix Element
+# Configuration de l'utilisateur Matrix Element.
 MATRIX_USER = os.environ.get("MATRIX_USER", "@bot_homelab:matrix.org")
 MATRIX_PASSWORD = os.environ.get("MATRIX_PASSWORD")
 HOMESERVER = os.environ.get("HOMESERVER", "https://matrix.org")
